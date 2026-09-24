@@ -1,32 +1,79 @@
-# Benchmark OCR ajustado para Windows
+# Benchmark OCR de chassi e motor
 
-Leia **INSTALAR_WINDOWS.md** para instalar e executar. Esta revisão usa `assets` na raiz e mantém main.py, limpar_dataset.py, acertos.py e preprocessar_imagens.py. O pacote não inclui fotos nem pesos de modelos.
+Compara EasyOCR, PaddleOCR e Qwen em imagens recortadas, com as mesmas amostras, tratamentos e regras de pontuação. Esta revisão mantém os quatro scripts do projeto. Não há framework novo, banco de dados ou interface adicional.
 
-## Correções desta revisão
+**Estado:** protocolo v3 implementado e testado com adaptadores simulados. Não foi realizada nova inferência real nesta revisão. Não há resultado de 80% comprovado. As anotações ainda precisam de revisão independente para publicação.
 
-- A mesma função de exclusão é usada no preparo, no main e na limpeza. Acentos, espaços e pontuação são normalizados antes de reconhecer sentinelas. `0.0`, `00-00`, `0 0`, `N/A`, `NÃO`, `SEM NÚMERO`, `SEM NUMERAÇÃO`, `SEM CHASSI`, `SEM MOTOR`, `NÃO POSSUI`, `NÃO TEM`, `NÃO SE APLICA` e `INEXISTENTE` são barrados antes de inferir. Zeros dentro de identificadores reais, como 001234, são mantidos. A lista exata está em SENTINELAS_AUSENCIA. É uma convenção do dataset, não reconhecimento universal de linguagem.
-- Exige Dados do Veículo textual, primeira linha chassi e segunda motor. Campo ausente, null, linha faltante ou linhas adicionais com conteúdo interrompem o preparo com indicação do JSON. Ausência real deve ser anotada explicitamente nas posições corretas, por exemplo `ABC123\nNÃO`.
-- Rótulos com dois-pontos, caracteres inesperados e marcadores ambíguos como ILEGÍVEL interrompem o preparo. Imagem difícil não deve ser excluída automaticamente como se o objeto não tivesse número. A revisão humana continua necessária para gabaritos plausíveis, linhas trocadas e marcações incorretas.
-- O preparo grava amostras_elegiveis.csv. Os gráficos finais verificam se todas as imagens esperadas foram registradas nas três condições. Um crop preparado apagado causa erro explícito; o sistema não reduz silenciosamente o conjunto em execução.
-- Hash dos quatro scripts e versões adicionais de dependências são registrados junto com hash do dataset, tag/digest do Qwen e prompt. Não se deve retomar resultados da revisão anterior nesta versão.
-- requirements.txt separado para o benchmark, sem empacotadores de aplicativo; guia de instalação Python 3.10 x64 e PyTorch CPU.
+## O que mudou
 
-## Proteções mantidas
+- Quatro gabaritos corrigidos por inspeção visual, com valores anteriores e evidências em `revisao_anotacoes.json`. As correções são aplicadas à nova cópia; `assets` não é alterado.
+- Um recorte corrigido: a placa que juntava **Série Nº** e **Modelo** passa a conter somente a série, nas quatro condições. As demais BBoxes são reutilizadas, com validação de convexidade e limites.
+- Ausências continuam fora da inferência. Referência válida sem crop é registrada separadamente. O marcador `ERRO` agora exige revisão, em vez de ser interpretado como ausência.
+- Quatro tratamentos: `sem_tratamento`, `nativo`, `clahe` e `ampliado` (ampliação convencional com margem, sem IA generativa).
+- Um modelo por processo. EasyOCR e PaddleOCR não ficam carregados juntos. O Qwen é descarregado entre etapas. Isso reduz a memória simultânea, mas não estabelece um limite rígido de RAM.
+- Qwen com `num_predict=64`, `num_ctx=4096`, temperatura 0 e seed 0. Respostas brutas, metadados, truncamento e falhas são preservados. Comunicação pela API HTTP local do Ollama, sem depender da validação do SDK antigo.
+- Até duas tentativas por imagem/modelo/tratamento; somente falhas técnicas são repetidas. Acertos e erros de leitura não são refeitos. Reiniciar não reinicia o orçamento.
+- Acerto principal sobre **todas as imagens elegíveis da partição**, incluindo falhas como não acertos. CER de falhas fica indefinido; os relatórios identificam o denominador e mostram também CER no conjunto comum.
+- Desenvolvimento e avaliação exploratória separados por grupo de veículo/identificador/pixels repetidos. Resultados antigos já foram vistos: essa separação posterior **não transforma o conjunto em teste cego**.
+- Configuração, hashes, versões, pesos OCR e histórico de tentativas registrados. Mudanças de configuração bloqueiam a retomada na mesma pasta.
 
-Referência inválida não gera chamada, acerto, erro nem tempo de inferência. Referência válida sem crop original é excluída das três condições com motivo crop_ausente. Ambos aparecem em exclusoes.csv. Ausência legítima e imagem faltante são situações diferentes e precisam ser reportadas separadamente.
+## Executar no Windows
 
-As três condições continuam: crop antigo sem tratamento, recorte da foto original sem limite de 280 pixels e recorte nativo com CLAHE (LAB, clipLimit 2, grade 8x8). Não modifica os assets nem inventa caracteres. Recorte automático reutiliza a BBox anotada, não detecta a região nem corrige marcações erradas.
+Abra o PowerShell na raiz do projeto. Mantenha `assets` na raiz e use o Python 3.10 já instalado. Não use a antiga `.venv` de Python 3.14.
 
-Falha técnica gera status e CER vazio; leitura vazia com execução bem-sucedida gera CER 1. A normalização de gabarito e predição retém A–Z/0–9 sem trocar O/0 ou I/1. CER usa distância de Levenshtein sobre comprimento do gabarito; os gráficos mostram média por imagem. Acerto exato exige sequência integral igual.
+```powershell
+.venv310\Scripts\python.exe -m pip install -r requirements.txt
+.venv310\Scripts\python.exe testar_validacao.py
+.venv310\Scripts\python.exe preprocessar_imagens.py
+```
 
-Retomada por imagem e tipo; última tentativa vale para as estatísticas. Se um modelo falha tecnicamente, os três são refeitos nessa imagem na próxima execução. A comparação usa as mesmas imagens com sucesso nas nove combinações. Essa interseção pode excluir casos difíceis; cobertura.csv deve acompanhar os 12 gráficos. Não confundir ausência de falhas atuais com ausência de falhas no histórico.
+O preparo cria `dataset_v3` sem sobrescrever `dataset_tratado`. Se `dataset_v3` já existir, o preparo para. Para outra revisão, use `--saida dataset_v3_revisado` e informe esse caminho ao `main.py` com `--dataset`.
 
-## Limites científicos e validação
+Com o Ollama ativo e `qwen2.5vl:latest` instalado:
 
-Não há garantia de ausência de erros ou melhora de acerto. O protocolo depende de conferir todas as convenções reais de ausência e os gabaritos. Cabeçalhos, tipos e posições incorretos conhecidos são barrados, mas uma sequência plausível na posição errada ainda pode passar. A lista de sentinelas precisa ser revisada com o responsável pelas anotações.
+```powershell
+.venv310\Scripts\python.exe benchmark-ocr\main.py --saida benchmark-ocr\resultados_v3_dev
+```
 
-As OCRs rodam em CPU; Qwen usa o dispositivo escolhido pelo Ollama. As entradas são comuns, os pré-processamentos internos são diferentes. Tempos incluem primeira chamada e comunicação; comparações de latência exigem controle adicional de hardware, aquecimento e ordem. Não há teste estatístico de significância ou intervalo de confiança automático.
+Esse comando usa somente **desenvolvimento** e executa os três modelos nos quatro tratamentos. Para registrar a máquina, acrescente `--hardware "CPU: seu modelo; RAM: sua capacidade; GPU: RTX 5060; VRAM: 8 GB"`, preenchendo os dados reais. Repita exatamente o comando para retomar.
 
-As verificações desta entrega usam dados sintéticos e adaptadores simulados, não inferência real dos modelos. A instalação completa em Windows precisa ser validada pelos comandos do guia. O documento Word anterior descreve a versão anterior; as mudanças acima o complementam e corrigem as limitações das sentinelas e da completude apontadas nele. Nenhuma alteração foi enviada ao GitHub.
+Para avaliar o candidato Qwen3-VL, em outra pasta, com as mesmas condições e todos os comparadores:
 
-Para repetir os testes sem pesos nem servidor: `.venv\Scripts\python.exe testar_validacao.py`. Eles criam apenas dados temporários e não alteram seus assets.
+```powershell
+ollama pull qwen3-vl:8b-instruct
+.venv310\Scripts\python.exe benchmark-ocr\main.py --qwen qwen3-vl:8b-instruct --saida benchmark-ocr\resultados_v3_qwen3_dev
+```
+
+O download e a execução podem exigir memória adicional. É um candidato experimental, sem garantia de melhora. Para um piloto apenas do Qwen, acrescente `--modelos Qwen_VL` e use uma pasta exclusiva; esse piloto não representa a comparação completa com as três IAs.
+
+Depois de decidir a configuração usando desenvolvimento, preserve os parâmetros e execute a avaliação em outra pasta:
+
+```powershell
+.venv310\Scripts\python.exe benchmark-ocr\main.py --parte avaliacao --saida benchmark-ocr\resultados_v3_avaliacao
+```
+
+O exemplo usa Qwen2.5. Se o candidato escolhido for Qwen3, informe também `--qwen qwen3-vl:8b-instruct`. Não volte a ajustar os parâmetros com base nessa avaliação e depois a chame de teste independente. Para um artigo confirmatório, reserve novas imagens de outros veículos.
+
+## Resultados
+
+Cada pasta de execução contém:
+
+| Arquivo | Conteúdo |
+|---|---|
+| `configuracao.json` | Dados, código, ambiente, modelo e protocolo congelados |
+| `pesos_*.json` | Hashes dos pesos usados pelas OCRs |
+| `<tratamento>/tentativas_*.jsonl` | Início e fim de cada tentativa, resposta original e falhas |
+| `resultados_por_imagem.csv` | Formato longo: uma linha por imagem/modelo/tratamento |
+| `comparacao_tratamentos.csv` | Acerto, CER macro/micro, cobertura, truncamentos e tempo, por categoria e total |
+| `acertos_exatos.csv`, `analise_erros.csv` | Acertos e erros, incluindo pasta de origem e contagem de operações |
+| `Acerto_pct.png`, `CER_macro_comum_pct.png`, `Tempo_sucessos_s.png` | Comparações visuais dos tratamentos |
+
+Os 12 gráficos antigos permanecem em `benchmark-ocr/resultados_ajustados`. A v3 gera três gráficos comparativos, cada um contendo os modelos e tratamentos selecionados. `N=0` significa ausência de dados, nunca acerto perfeito. Para regenerar relatórios sem IAs:
+
+```powershell
+.venv310\Scripts\python.exe benchmark-ocr\main.py --saida benchmark-ocr\resultados_v3_dev --relatorios
+```
+
+Use `--parte avaliacao` se a execução salva for dessa partição. Não misture CSVs antigos, novas referências e novas predições.
+
+Leia [PROTOCOLO_CIENTIFICO.md](PROTOCOLO_CIENTIFICO.md) para métricas, limitações e estratégia para buscar 80%, e [INSTALAR_WINDOWS.md](INSTALAR_WINDOWS.md) para instalação e recuperação após interrupções.

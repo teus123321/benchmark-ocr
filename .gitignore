@@ -2,3 +2,5 @@
 __pycache__/
 *.pyc
 cache_temporario/
+.venv/
+cache_modelos/

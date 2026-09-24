@@ -1,0 +1,73 @@
+{
+  "versao": "2026-09-24-v3",
+  "metodo": "Inspeção visual assistida dos recortes nativos. Não é revisão independente por dois anotadores. Preserva os assets originais; aplica correções somente ao novo dataset.",
+  "correcoes": [
+    {
+      "Pasta": "Apto_2023-04-25_03-56-20_2023-04-25_04-56-33",
+      "Tipo": "Chassi",
+      "antes": "9BFEXXL38JD69086",
+      "depois": "9BFEXXL38JDB69086",
+      "motivo": "B visível entre D e 6, ausente no gabarito.",
+      "evidencia": "imgs/cropped_567_ed5ccb92-5199-49e2-976d-3d211ddabc22.jpg"
+    },
+    {
+      "Pasta": "Apto_2023-04-26_08-40-17_2023-04-26_09-58-28",
+      "Tipo": "Chassi",
+      "antes": "93XJRKB88TACA20894",
+      "depois": "93XJRKB8TACA20894",
+      "motivo": "Há um único 8 entre B e T na imagem; o gabarito duplicava esse caractere.",
+      "evidencia": "imgs/cropped_774_b40decb7-d98d-466e-a231-d53c78838b14.jpg"
+    },
+    {
+      "Pasta": "Apto_2023-05-02_12-12-13_2023-05-02_12-48-48",
+      "Tipo": "Chassi",
+      "antes": "93XHNK340C221322",
+      "depois": "93XHNK3402C221322",
+      "motivo": "2 visível entre 0 e C, ausente no gabarito.",
+      "evidencia": "imgs/cropped_1300_7a906b4d-8145-4520-bbc7-86c8f6c67d3b.jpg"
+    },
+    {
+      "Pasta": "Apto_2023-05-08_13-06-27_2023-05-08_14-03-38",
+      "Tipo": "Chassi",
+      "antes": "9BWZZZ30ZSP02348",
+      "depois": "9BWZZZ30ZSP023248",
+      "motivo": "2 visível entre 3 e 4 na sequência final 023248; confirmado recortando novamente a foto original.",
+      "evidencia": "imgs/1907_ae425c0c-1406-420a-89a7-18a97a86185a.jpg"
+    }
+  ],
+  "pendencias": [
+    {
+      "Pasta": "Apto_2023-05-26_12-44-51_2023-05-26_13-49-40",
+      "Tipo": "Chassi",
+      "motivo": "Recorte inclui REM após o identificador, ausente no gabarito. Definir e revisar a região alvo, sem remover REM apenas da resposta de um modelo."
+    }
+  ],
+  "limite": "Lista não exaustiva. Revisar todas as referências e BBoxes antes de considerar o dataset definitivo. Os resultados antigos já foram vistos: uma partição posterior não constitui teste cego.",
+  "recortes": [
+    {
+      "Pasta": "Apto_2023-04-29_06-14-50_2023-05-04_04-18-14",
+      "Tipo": "Chassi",
+      "bbox_antes": [
+        [
+          135,
+          1046
+        ],
+        [
+          922,
+          1076
+        ],
+        [
+          918,
+          1159
+        ],
+        [
+          150,
+          1128
+        ]
+      ],
+      "fracao_horizontal": 0.465,
+      "motivo": "A foto original identifica SÉRIE Nº no campo à esquerda e MODELO no campo à direita. Mantém a região SÉRIE Nº para todos os modelos e tratamentos.",
+      "evidencia": "imgs/1156_af95c277-6808-4c9a-a236-e8ceb91676bc.jpg"
+    }
+  ]
+}

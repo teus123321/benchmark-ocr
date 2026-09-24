@@ -17,7 +17,7 @@ def normalizar(texto):
 
 
 # Convenções explícitas de ausência, aplicadas somente ao gabarito.
-SENTINELAS_AUSENCIA = {"", "NAO", "NA", "NENHUM", "NENHUMA", "ERRO", "NULL", "NONE",
+SENTINELAS_AUSENCIA = {"", "NAO", "NA", "NENHUM", "NENHUMA", "NULL", "NONE",
     "SEMNUMERO", "SEMNUMERACAO", "SEMCHASSI", "SEMMOTOR", "NAOPOSSUI", "NAOTEM",
     "NAOSEAPLICA", "NA", "INEXISTENTE"}
 
@@ -45,7 +45,7 @@ def ler_referencias(item):
         if referencia_invalida(valor):
             continue
         if ":" in valor or not re.fullmatch(r"[A-Za-z0-9\s./*_-]+", valor) or normalizar(valor) in {
-            "ILEGIVEL", "NAOLEGIVEL", "DESCONHECIDO", "NAOINFORMADO", "NAOIDENTIFICADO", "SEMIDENTIFICACAO"}:
+            "ERRO", "ILEGIVEL", "NAOLEGIVEL", "DESCONHECIDO", "NAOINFORMADO", "NAOIDENTIFICADO", "SEMIDENTIFICACAO"}:
             raise ValueError(f"Referência ambígua: {valor!r}. Revise o JSON; não excluir imagem difícil como ausência.")
     return partes[:2]
 
