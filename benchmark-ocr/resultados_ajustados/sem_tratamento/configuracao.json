@@ -1,0 +1,24 @@
+{
+  "protocolo": "windows_v2",
+  "codigo_sha256": "0f63f4efe5aaa2b050c0b42291128a71d8d618518f25fdb6fd4e791f71225115",
+  "dataset_sha256": "096f720bd3bc324a4935b632f878b16ca9f872e2525a9a01ae65e1e487bdbb6a",
+  "qwen": "qwen2.5vl:latest",
+  "digest": "5ced39dfa4bac325dc183dd1e4febaa1c46b3ea28bce48896c8e69c1e79611cc",
+  "prompt": "You are an OCR system. Extract ONLY the alphanumeric characters from this image. Do not include spaces, special characters, or conversational text. Output only the raw string.",
+  "temperature": 0,
+  "seed": 0,
+  "normalizacao": "A-Z0-9",
+  "versoes": {
+    "easyocr": "1.7.2",
+    "paddleocr": "2.8.1",
+    "paddlepaddle": "2.6.2",
+    "ollama": "0.4.7",
+    "Levenshtein": "0.26.1",
+    "torch": "2.5.1+cpu",
+    "torchvision": "0.20.1+cpu",
+    "numpy": "1.26.4",
+    "Pillow": "10.4.0",
+    "opencv-python": "4.6.0.66",
+    "matplotlib": "3.9.2"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "Dados do Veículo": "93XJRKB88TACA20894\n4M41UCAT2776",
+  "URL CHASSI": "774_b40decb7-d98d-466e-a231-d53c78838b14.jpg.png",
+  "URL Motor": "774_e0ddb02a-2eb7-4547-9b55-e2d4fad2ec53.jpg.png",
+  "Chassi_BBox": [
+    [
+      290,
+      219
+    ],
+    [
+      296,
+      766
+    ],
+    [
+      211,
+      772
+    ],
+    [
+      209,
+      213
+    ]
+  ],
+  "Motor_BBox": [
+    [
+      49,
+      39
+    ],
+    [
+      153,
+      0
+    ],
+    [
+      161,
+      91
+    ],
+    [
+      62,
+      132
+    ]
+  ]
+}

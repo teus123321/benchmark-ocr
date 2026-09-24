@@ -1,0 +1,4 @@
+.venv310/
+__pycache__/
+*.pyc
+cache_temporario/

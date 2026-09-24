@@ -1,0 +1,14 @@
+# Windows x64, Python 3.10. Instale PyTorch CPU antes (ver INSTALAR_WINDOWS.md).
+# Mantém PaddleOCR 2.x, compatível com o main.py.
+numpy==1.26.4
+paddlepaddle==2.6.2
+paddleocr==2.8.1
+easyocr==1.7.2
+opencv-python==4.6.0.66
+opencv-contrib-python==4.6.0.66
+opencv-python-headless==4.6.0.66
+Pillow==10.4.0
+matplotlib==3.9.2
+Levenshtein==0.26.1
+ollama==0.4.7
+protobuf==3.20.2

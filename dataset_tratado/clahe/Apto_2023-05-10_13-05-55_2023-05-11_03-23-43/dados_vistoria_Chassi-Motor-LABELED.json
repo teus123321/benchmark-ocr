@@ -1,0 +1,24 @@
+{
+  "Dados do Veículo": "9EP021120G1000456\n00",
+  "URL CHASSI": "2182_c61370a2-8334-4f90-80ea-c2cbeb4389cd.jpg.png",
+  "URL Motor": "",
+  "Chassi_BBox": [
+    [
+      11,
+      113
+    ],
+    [
+      1163,
+      113
+    ],
+    [
+      1163,
+      412
+    ],
+    [
+      11,
+      412
+    ]
+  ],
+  "Motor_BBox": []
+}

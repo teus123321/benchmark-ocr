@@ -1,0 +1,7 @@
+Tipo,Modelo,Imagens_no_CSV,Sucessos_tecnicos,Falhas_tecnicas,Imagens_na_comparacao
+Chassi,EasyOCR,149,149,0,148
+Chassi,PaddleOCR,149,149,0,148
+Chassi,Qwen_VL,149,148,1,148
+Motor,EasyOCR,132,132,0,127
+Motor,PaddleOCR,132,132,0,127
+Motor,Qwen_VL,132,130,2,127

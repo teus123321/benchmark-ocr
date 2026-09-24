@@ -1,0 +1,24 @@
+{
+    "Dados do Veículo": "94BG151288V020618\n00",
+    "URL CHASSI": "2124_b8a227ec-f7d1-4ab2-a87e-fc0f302ce9e7.jpg",
+    "URL Motor": "2124_9b2d350c-fe4b-44a3-bdd9-20cc4af18de2.jpg",
+    "Chassi_BBox": [
+        [
+            270,
+            274
+        ],
+        [
+            1444,
+            274
+        ],
+        [
+            1444,
+            535
+        ],
+        [
+            280,
+            541
+        ]
+    ],
+    "Motor_BBox": []
+}

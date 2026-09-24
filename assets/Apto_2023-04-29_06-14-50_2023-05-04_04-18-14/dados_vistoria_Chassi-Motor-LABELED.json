@@ -1,0 +1,24 @@
+{
+    "Dados do Veículo": "00302HI\n00",
+    "URL CHASSI": "1156_af95c277-6808-4c9a-a236-e8ceb91676bc.jpg",
+    "URL Motor": "1156_8b111f6d-79b5-432c-a6e0-cadd167f5aa9.jpg",
+    "Chassi_BBox": [
+        [
+            135,
+            1046
+        ],
+        [
+            922,
+            1076
+        ],
+        [
+            918,
+            1159
+        ],
+        [
+            150,
+            1128
+        ]
+    ],
+    "Motor_BBox": []
+}
