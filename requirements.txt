@@ -1,14 +1,31 @@
-# Windows x64, Python 3.10. Instale PyTorch CPU antes (ver INSTALAR_WINDOWS.md).
-# Mantém PaddleOCR 2.x, compatível com o main.py.
+# Ambiente de referência: Windows x64 e Python 3.10.
+# Antes deste arquivo, instale PyTorch CPU conforme o README.
+# Este arquivo não substitui o registro do ambiente real:
+# python -m pip freeze > requirements-experimento.txt
+
+# Processamento numérico, imagens e gráficos
 numpy==1.26.4
+Pillow==10.4.0
+matplotlib==3.9.2
+
+# Comunicação com Ollama local e API da NVIDIA
+requests==2.32.5
+
+# EasyOCR e sua base PyTorch
+torch==2.5.1
+torchvision==0.20.1
+easyocr==1.7.2
+
+# PaddleOCR 2.x: interface utilizada pelo script
 paddlepaddle==2.6.2
 paddleocr==2.8.1
-easyocr==1.7.2
+
+# Restrição do PaddlePaddle 2.6.2 no Windows
+protobuf==3.20.2
+
+# Dependências OpenCV do conjunto legado.
+# EasyOCR exige headless; PaddleOCR exige python e contrib.
+# Compartilham cv2: veja a limitação documentada no README.
 opencv-python==4.6.0.66
 opencv-contrib-python==4.6.0.66
 opencv-python-headless==4.6.0.66
-Pillow==10.4.0
-matplotlib==3.9.2
-Levenshtein==0.26.1
-ollama==0.4.7
-protobuf==3.20.2
