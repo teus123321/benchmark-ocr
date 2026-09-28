@@ -1,0 +1,44 @@
+PROTOCOLO DA COMPARAÇÃO
+
+Condição: recortes com margem de 10%. Não compara outros tratamentos.
+
+Acerto exato: transcrição normalizada integralmente igual ao gabarito.
+Denominador principal: todas as imagens elegíveis, incluindo falhas técnicas.
+Cobertura: respostas recebidas / imagens elegíveis; não significa acerto.
+
+CER: distância de Levenshtein / comprimento do gabarito.
+Macro: média do CER por imagem.
+Micro: soma das distâncias / soma dos comprimentos dos gabaritos.
+Falhas técnicas têm CER indefinido, não zero.
+Leitura vazia com resposta recebida tem CER 100%.
+Respostas longas e truncadas permanecem na avaliação.
+CER pode superar 100%.
+
+Conjunto comum: imagens com resposta em todos os modelos.
+Essa interseção pode sofrer viés de seleção e deve acompanhar a cobertura.
+N/D ou nan: medida indefinida, não desempenho perfeito.
+
+Normalização: NFKC, maiúsculas e A-Z/0-9, igual à dos scripts executados.
+Letras não ASCII e saídas >100 são sinalizadas, sem correção automática.
+O limite de 100 é somente um alerta diagnóstico, não uma exclusão.
+
+Gabaritos originais: correções propostas anteriormente NÃO são aplicadas
+automaticamente. A validade dos rótulos exige revisão humana.
+Ausências declaradas não são exemplos OCR.
+Referências válidas sem BBox/recorte são pendências do dataset.
+
+IC95: bootstrap por pasta/veículo, 2000 repetições, seed 2026.
+Assume pastas independentes; se um veículo aparece em várias pastas,
+é necessário agrupá-las pelo mesmo veículo.
+IC não certifica representatividade do dataset, nem diferença
+estatisticamente significativa entre modelos.
+
+Tempo inclui comunicação e reenvios quando registrados.
+Exclui carga inicial dos modelos e pausas externas.
+CPU local, Ollama e API remota não medem somente velocidade do modelo.
+
+O CSV não comprova modelo exato, pesos ou prompt:
+guarde também os scripts e as versões utilizadas.
+
+Como este dataset já foi inspecionado, otimizações futuras devem ser
+avaliadas em um conjunto de teste independente.
