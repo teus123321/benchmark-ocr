@@ -31,7 +31,7 @@ PASTAS = {
 ARQUIVOS = {
     "EasyOCR": "",
     "PaddleOCR": "",
-    "Qwen": "",
+    "Qwen": "resultados_1790808664597238200.csv",
     "Nemotron": "",
 }
 
