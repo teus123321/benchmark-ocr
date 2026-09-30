@@ -1,6 +1,6 @@
 {
   "condicao": "recortes_margem10_v2/com_margem",
-  "script_sha256": "fadbcd789edf6ffc616f080b32305cd3a5da5bafefc95daa1be90d210ff423d7",
+  "script_sha256": "0c3ec4edc95e7e2b9a1afbe63bcdc48c0337290f5d43c26ea2e9398025efd533",
   "csvs": {
     "EasyOCR": {
       "arquivo": "D:\\ajustes_benchmark_original\\easyOCR\\resultados_1790556443033037900.csv",
@@ -11,8 +11,8 @@
       "sha256": "b7c9e667cbbba88efcf7ef2a6364623fe21f8fdafa9d3bbf864eab6898efed86"
     },
     "Qwen": {
-      "arquivo": "D:\\ajustes_benchmark_original\\qwen\\resultados_1790557254996476700.csv",
-      "sha256": "de4c9310f46836e0cf1f84191ec0d1c0d8b3bcf4511ea95e6c44d4719f7d6a32"
+      "arquivo": "D:\\ajustes_benchmark_original\\qwen\\resultados_1790808664597238200.csv",
+      "sha256": "b61e0eb5600a6c84dd9c6bdf338a46e83e3bd51624fd4490b6f1217bbb8371e4"
     },
     "Nemotron": {
       "arquivo": "D:\\ajustes_benchmark_original\\nemotrom\\resultados_1790547582417709800.csv",
